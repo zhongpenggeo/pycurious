@@ -176,53 +176,6 @@ class CurieOptimise(CurieGrid):
             misfit += self.objective_routine(beta=beta, zt=zt, dz=dz, C=C)
         return misfit
 
-    def optimise_tanaka(self, k, lnPhi, kmin_range=(0.05, 0.2), kmax_range=(0.05, 0.2)):
-        """
-        Find the optimal parameters of beta, zt, dz, C for a given
-        centroid (xc,yc) and window size.
-
-        Parameters
-        ----------
-         k  : wavenumber rad/km^-1
-         lnPhi      : ln(sqrt（Phi))
-         sigmal_lnPhi  :  
-        kmin        :  k range for zt
-        kmax        : k range for zo
-
-        Returns
-        -------
-         beta    : float - fractal parameters
-         zt      : float - top of magnetic layer
-         zo      : float - centrolid of magnetic layer
-         C       : float - field constant
-         zts     : slope of zt
-         zti     : intercpt of zt
-         ztr     : corraltion coefficiency of zt
-         ztp     : pvalue
-         zts     :
-         same as zos...
-        """
-       
-        S = lnPhi
-        
-        sf=k/(2.0*np.pi)
-        S2=np.log(np.exp(S)/sf)
-
-        # mask high wavenumbers
-        kmin, kmax = kmin_range
-        mask1 = np.logical_and(sf >=kmin, sf <=kmax)
-        X1 = sf[mask1]
-        Y1 = S[mask1]/(2.0*np.pi)
-        [zts, zti, ztr, ztp, ztss] = stats.linregress(X1, Y1)
-        # mask low wavenumbers
-        kmin, kmax = kmax_range
-        mask2 = np.logical_and(sf >=kmin, sf <=kmax)
-        X2 = sf[mask2]
-        Y2 = np.log(np.exp(S[mask2])/(X2*2.0*np.pi))/(2.0*np.pi)
-        [zos, zoi, zor, zop, zoss] = stats.linregress(X2, Y2)
-        # the slope is nagtive, we need to set to positive.
-        return (-zts, zti, ztr), (-zos, zoi, zor)
-
 
     def optimise(self, window, xc, yc, beta=3.0, zt=1.0, dz=10.0, C=5.0, taper=np.hanning, process_subgrid=None, **kwargs):
         """

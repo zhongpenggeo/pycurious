@@ -19,7 +19,7 @@ cm=1e-7
 ## TO VERIFY: multiplication factor "cm for 4*pi"
 ###########################################################
 ## Degree of fractal
-b=3.0
+b=-3.0
 ## Dimension of pixels (km), should be multiples of the smallest
 dlx=1.0
 dly=1.0
@@ -98,7 +98,7 @@ Mf=np.fft.fftn(M)
 for i in range(0,nmax-1):
     for k in range(0,nmax-1):
         for l in range(0,nmax-1):
-            Mf[i,k,l]=Mf[i,k,l]*((f[i])**2+(f[k])**2+(f[l])**2+0.0000001)**(-b/2)
+            Mf[i,k,l]=Mf[i,k,l]*((f[i])**2+(f[k])**2+(f[l])**2+0.0000001)**(b/4)
 ## DC correction - not needed in python, req. in MATLAB        
 ##Mf(1,1,1)=mean([Mf(2,1,1) Mf(1,2,1) Mf(1,1,2)])
 
@@ -123,7 +123,7 @@ print("--- %s seconds ---" % (time.time() - start_time))
 
 x=np.arange(0.5,0.5+dlx*(nx),dlx)*1000
 y=np.arange(0.5,0.5+dly*(nx),dly)*1000
-fid=open("test_mag_data-test5.txt","w+")
+fid=open("test_mag_data.txt","w+")
 for i in range(0,nx):
     for j in range(0,ny):
         fid.write(' '.join([str(x[i]),str(y[j]),str(np.real(ANO[i,j])),"\n"]))

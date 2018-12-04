@@ -1,9 +1,3 @@
-# modification description
-in fact, I thinnk the code about Tanaka's Method is wrong, so I add a function named optimise\_tanaka to get Zb and Zo in optime.py.  
-
-At the same time, I change the ipynb file to process my data. 
-
-
 # PyCurious
 
 Magnetic data is one of the most common geophysics datasets available on the surface of the Earth. Curie depth is the depth at which rocks lose their magnetism. The most prevalent magnetic mineral is magnetite, which has a Curie point of 580C, thus the Curie depth is often interpreted as the 580C isotherm.
